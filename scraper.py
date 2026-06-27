@@ -1,6 +1,8 @@
 import requests
 import time
 import os
+import csv
+import json
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -10,19 +12,35 @@ if not API_KEY:
     print("Error: Could not find RAWG_API_KEY in your environment!")
     exit()
 
-def display_games(games_list):
+def build_cleaned_games(games_list):
+    cleaned_games = []
+
     for game in games_list:
         # extract names from genres and platforms
-        genres = [g['name'] for g in game.get('genres', [])]
-        platforms = [p['platform']['name'] for p in game.get('platforms', [])]
+        genres = ", ".join([g['name'] for g in game.get('genres', [])])
+        platforms = ", ".join([p['platform']['name'] for p in game.get('platforms', [])])
 
-        print(
-            f"Title: {game['name']} | "
-            f"Released: {game['released']} | "
-            f"Genres: {', '.join(genres)} | "
-            f"Metacritic Rating: {game['metacritic']} | "
-            f"Platforms: {', '.join(platforms)}\n"
-        )
+        cleaned_games.append({
+            "name": game.get('name', 'Unknown'), 
+            "released": game.get('released', 'N/A'), 
+            "genres": genres, 
+            "metacritic": game.get('metacritic', 'N/A'), 
+            "platforms": platforms
+        })
+
+    return cleaned_games
+
+def write_csv(cleaned_games):
+    field_names = ["name", "released", "genres", "metacritic", "platforms"]
+
+    with open("output.csv", "w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=field_names)
+        writer.writeheader()
+        writer.writerows(cleaned_games)
+
+def write_json(games_dict):
+    with open("output.json", "w") as file:
+        json.dump(games_dict, file, indent=4)
 
 def main():
     search_url = "https://api.rawg.io/api/games"
@@ -61,7 +79,9 @@ def main():
         
         time.sleep(2)
 
-    display_games(game_list)
+    cleaned_games = build_cleaned_games(game_list)
+    write_csv(cleaned_games)
+    write_json(cleaned_games)
 
 if __name__ == "__main__":
     main()
