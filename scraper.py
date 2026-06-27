@@ -3,6 +3,8 @@ import time
 import os
 import csv
 import json
+import argparse
+from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -11,6 +13,26 @@ API_KEY = os.environ.get("RAWG_API_KEY")
 if not API_KEY:
     print("Error: Could not find RAWG_API_KEY in your environment!")
     exit()
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(
+        description="Obtain and export a list of games and their details."
+    )
+
+    parser.add_argument("--year", type=int, help="The full year the games released (e.g. 2006)")
+    parser.add_argument("--genre", type=str, help="The genre or genres of the desired games separated by commas (e.g. indie,action)")
+    parser.add_argument("--limit", type=int, default=50, help="The number of results to obtain (default 50, min 1, max 200)")
+
+    return parser.parse_args()
+
+def defined_dates(value):
+    try:
+        datetime.strptime(value, "%Y")
+        filter_dates = f"{value}-01-01,{value}-12-31"
+    except ValueError:
+        raise argparse.ArgumentTypeError("Year must use YYYY format.")
+    
+    return filter_dates
 
 def build_cleaned_games(games_list):
     cleaned_games = []
@@ -45,13 +67,35 @@ def write_json(games_dict):
 def main():
     search_url = "https://api.rawg.io/api/games"
     game_list = []
-    result_limit = 50
     first_page = True
+    args = parse_arguments()
+
+    GENRE_SLUGS = {
+        "rpg": "role-playing-games-rpg",
+        "fps": "shooter",
+        "sim": "simulation",
+        "mmo": "massively-multiplayer",
+        "board games": "board-games",
+        "board": "board-games",
+        "tabletop": "board-games,card"
+    }
 
     query_params = {
         "key": API_KEY,
         "page_size": 40
     }
+
+    # obtain result limit by using --limit argument, defaults to 50
+    result_limit = max(1, min(args.limit, 200))
+
+    # add year flag to query params if user used the argument
+    if args.year:
+        query_params["dates"] = defined_dates(str(args.year))
+
+    # add genre flag to query params if user used the argument
+    if args.genre:
+        slug_name = GENRE_SLUGS.get(args.genre.lower(), args.genre.lower())
+        query_params["genres"] = slug_name
 
     while search_url and len(game_list) < result_limit:
         try:
