@@ -22,7 +22,7 @@ GENRE_SLUGS = {
 
 
 def get_api_key():
-    return os.environ.get("RAWG_API_KEY") or os.getenv("RAWG_API_KEY")
+    return os.environ.get("RAWG_API_KEY")
 
 
 def parse_arguments():
@@ -62,14 +62,14 @@ def validate_limit(value):
 
 def validate_year(value):
     try:
-        year = int(str(value))
+        year = int(value)
     except (TypeError, ValueError) as exc:
-        raise argparse.ArgumentTypeError("Year must be a four-digit year.") from exc
+        raise argparse.ArgumentTypeError("Year must be a valid integer.") from exc
+    
+    current_year = datetime.now().year
 
-    try:
-        datetime.strptime(str(year), "%Y")
-    except ValueError as exc:
-        raise argparse.ArgumentTypeError("Year must be a four-digit year.") from exc
+    if not (1970 <= year <= current_year):
+        raise argparse.ArgumentTypeError(f"Year must be between 1970 and {current_year}.")
 
     return year
 
@@ -169,7 +169,7 @@ def fetch_games(api_key, limit, year=None, genre=None):
             next_url = data.get("next")
             if next_url and len(game_list) < limit:
                 time.sleep(2)
-                query_params = None
+                query_params = None # set to none to avoid sending duplicate params in url
         except requests.Timeout as exc:
             raise RuntimeError("The RAWG API request timed out. Please try again later.") from exc
         except requests.HTTPError as exc:
@@ -198,10 +198,23 @@ def main():
         return 1
 
     cleaned_games = build_cleaned_games(games)
-    write_csv(cleaned_games)
-    write_json(cleaned_games)
-    print(f"Successfully fetched {len(cleaned_games)} games.")
-    return 0
+
+    try:
+        print("Saving data to files...")
+        write_csv(cleaned_games)
+        write_json(cleaned_games)
+        print(f"Successfully fetched {len(cleaned_games)} games.")
+        return 0
+    
+    except PermissionError:
+        print("Error: Permission denied. Please close 'output.csv' or 'output.json' if they are open in another program.")
+        return 1
+    except OSError as exc:
+        print(f"System Error saving files: {exc.strerror}")
+        return 1
+    except Exception as exc:
+        print(f"An unexpected error occurred while saving: {exc}")
+        return 1
 
 
 if __name__ == "__main__":
