@@ -53,6 +53,8 @@ python scraper.py --genre rpg --year 2015 --limit 30
 python scraper.py --genre action,indie --limit 10
 ```
 
+- You can also find pre-generated sample outputs in the `/examples` directory.
+
 ## Output
 
 - `output.csv`: tabular export with columns `name`, `released`, `genres`, `metacritic`, `platforms`.
@@ -60,6 +62,7 @@ python scraper.py --genre action,indie --limit 10
 
 ## Notes on behavior and safety
 
+- Upon running the script, previous output files will be erased and rewritten completely.
 - The script validates `--limit` (1–200) and `--year` (four digits). Invalid values produce user-friendly errors.
 - Network requests use a timeout and will raise clear errors for network problems, timeouts, or API errors.
 - Do not store API keys in source control. Use a `.env` file or CI secrets for automation.
