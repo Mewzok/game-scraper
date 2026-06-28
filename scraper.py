@@ -85,7 +85,7 @@ def normalize_genres(value):
 
     parts = [part.strip() for part in str(value).split(",") if part.strip()]
     if not parts:
-        raise argparse.ArgumentTypeError("Genre filter cannot be empty.")
+        raise ValueError("Genre filter cannot be empty.")
 
     normalized_parts = []
     for part in parts:
@@ -193,13 +193,16 @@ def main():
 
     try:
         games = fetch_games(api_key, limit=args.limit, year=args.year, genre=args.genre)
+    except ValueError as exc:
+        print(f"Configuration Error: {exc}")
+        return 1
     except RuntimeError as exc:
         print(f"Error: {exc}")
         return 1
 
-    cleaned_games = build_cleaned_games(games)
-
     try:
+        cleaned_games = build_cleaned_games(games)
+        
         print("Saving data to files...")
         write_csv(cleaned_games)
         write_json(cleaned_games)
