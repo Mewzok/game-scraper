@@ -1,0 +1,142 @@
+[
+    {
+        "name": "Fable: The Lost Chapters",
+        "released": "2005-09-01",
+        "genres": "Adventure, Action, RPG",
+        "metacritic": 83,
+        "platforms": "PC, macOS, Xbox"
+    },
+    {
+        "name": "Dungeon Siege 2",
+        "released": "2005-08-16",
+        "genres": "Action, RPG",
+        "metacritic": 80,
+        "platforms": "PC"
+    },
+    {
+        "name": "Neverwinter Nights Diamond",
+        "released": "2005-11-02",
+        "genres": "Adventure, RPG",
+        "metacritic": null,
+        "platforms": "PC"
+    },
+    {
+        "name": "Sacred Gold",
+        "released": "2005-08-12",
+        "genres": "Action, RPG",
+        "metacritic": null,
+        "platforms": "PC"
+    },
+    {
+        "name": "Shadow of the Colossus",
+        "released": "2005-10-18",
+        "genres": "Adventure, Action, RPG",
+        "metacritic": 91,
+        "platforms": "PlayStation 2"
+    },
+    {
+        "name": "SpellForce - Platinum Edition",
+        "released": "2005-11-14",
+        "genres": "Strategy, Action, RPG",
+        "metacritic": 74,
+        "platforms": "PC"
+    },
+    {
+        "name": "Freedom Force vs. the Third Reich",
+        "released": "2005-05-29",
+        "genres": "Strategy, Action, RPG",
+        "metacritic": 86,
+        "platforms": "PC"
+    },
+    {
+        "name": "Ys: The Oath in Felghana",
+        "released": "2005-06-30",
+        "genres": "Adventure, Action, RPG",
+        "metacritic": 73,
+        "platforms": "PC, PSP"
+    },
+    {
+        "name": "Kingdom Hearts II",
+        "released": "2005-12-22",
+        "genres": "Action, RPG",
+        "metacritic": 87,
+        "platforms": "PlayStation 2"
+    },
+    {
+        "name": "Star Wolves",
+        "released": "2005-11-17",
+        "genres": "Strategy, RPG",
+        "metacritic": null,
+        "platforms": "PC"
+    },
+    {
+        "name": "Sudeki",
+        "released": "2005-03-24",
+        "genres": "Adventure, Action, RPG",
+        "metacritic": 72,
+        "platforms": "PC, Xbox"
+    },
+    {
+        "name": "Geneforge 3",
+        "released": "2005-03-28",
+        "genres": "Strategy, Indie, RPG",
+        "metacritic": null,
+        "platforms": "PC, macOS"
+    },
+    {
+        "name": "Fate (2005)",
+        "released": "2005-05-01",
+        "genres": "Adventure, Action, RPG",
+        "metacritic": 80,
+        "platforms": "PC"
+    },
+    {
+        "name": "Desert Law",
+        "released": "2005-04-28",
+        "genres": "Strategy, RPG",
+        "metacritic": null,
+        "platforms": "PC"
+    },
+    {
+        "name": "Dungeons & Dragons: Dragonshard",
+        "released": "2005-09-24",
+        "genres": "Strategy, RPG",
+        "metacritic": null,
+        "platforms": "PC"
+    },
+    {
+        "name": "Pathologic",
+        "released": "2005-06-09",
+        "genres": "Adventure, RPG",
+        "metacritic": null,
+        "platforms": "PC"
+    },
+    {
+        "name": "Castlevania: Dawn of Sorrow",
+        "released": "2005-10-04",
+        "genres": "Platformer, Action, RPG",
+        "metacritic": 89,
+        "platforms": "Nintendo DS"
+    },
+    {
+        "name": "Pok\u00e9mon Mystery Dungeon: Blue Rescue Team",
+        "released": "2005-11-17",
+        "genres": "RPG",
+        "metacritic": null,
+        "platforms": "Nintendo DS, Wii U, Game Boy Advance"
+    },
+    {
+        "name": "Fire Emblem: Path of Radiance",
+        "released": "2005-04-20",
+        "genres": "Strategy, RPG",
+        "metacritic": 85,
+        "platforms": "GameCube"
+    },
+    {
+        "name": "Dungeon Lords",
+        "released": "2005-05-05",
+        "genres": "RPG",
+        "metacritic": null,
+        "platforms": "PC"
+    }
+]
